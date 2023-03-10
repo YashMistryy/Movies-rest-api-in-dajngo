@@ -5,6 +5,9 @@ from .serializers import MovieSerializer
 from rest_framework.decorators import  api_view
 from rest_framework import status
 from rest_framework.response import Response
+from django.views.generic.list import ListView
+from django.views.generic import RedirectView
+
 
 # Create your views here.
 @api_view(['GET'])
@@ -12,6 +15,10 @@ def showAllMovies(request , format=None):
     movies = Movie.objects.all()
     serializer = MovieSerializer(movies , many = True)
     return Response(serializer.data)
+
+class MovieList(ListView):
+    model = Movie
+    template_name = 'movie_list.html'
 
 
 @api_view(['POST'])
